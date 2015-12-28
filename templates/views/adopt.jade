@@ -3,36 +3,41 @@ extends ../layouts/default
 block content
 	.container
 		h2 Adopt
-		
-		p Our top priority is finding the perfect home for each of our pups. Our adoption process has three steps:
+		.row
+			.col-lg-8
+				p Our top priority is finding the perfect home for each of our pups. Our adoption process has three steps:
 
-		ol
-			li 
-				span Our 
-				a(href="/preadoption") pre-adoption application
-				span . This form provides us with information about your family, home and lifestyle so we can begin to match you with your perfect pup! References are required and checked.
+				ol
+					li 
+						span Our 
+						a(href="/preadoption") pre-adoption application
+						span . This form provides us with information about your family, home and lifestyle so we can begin to match you with your perfect pup! References are required and checked.
 
-			li Meet and greets. Our adoptable dogs attend events each weekend to meet potential families - check out our Facebook page to see where we'll be next! These events give you a chance to measure energy levels and personalities (and get some puppy love). We'll also work with you to introduce your pets to ours and make sure everyone gets along.
+					li Meet and greets. Our adoptable dogs attend events each weekend to meet potential families - check out our Facebook page to see where we'll be next! These events give you a chance to measure energy levels and personalities (and get some puppy love). We'll also work with you to introduce your pets to ours and make sure everyone gets along.
 
-			li Our home visit and adoption contract. 
+					li Our home visit and adoption contract. 
 
-		p 
-			b Fees: 
-			span generally, a flat rate of $200 covers shots (up-to-date), de-worming, flea treatment, spay/neuter, microchip and all application fees. Some animals may have additional fees depending on expenses and special circumstances.
-		
-		p 
-			i LuvnPupz does not allow same-day adoptions; please understand that this is in the best interests of our pups (who have been through so much already). We're here to make sure you get the right dog for your family, and we appreciate your patience as we find the perfect match for you!
-
-		br
-		p 
-			b Check out our adoptable dogs here:
-		p
-			a(href="http://www.adoptapet.com/shelter87233-dogs.html") 
-				img(src="/images/adopt_a_pet.gif")
-				br
-				span http://www.adoptapet.com/shelter87233-dogs.html 
+				p 
+					b Fees: 
+					span generally, a flat rate of $200 covers shots (up-to-date), de-worming, flea treatment, spay/neuter, microchip and all application fees. Some animals may have additional fees depending on expenses and special circumstances.
 				
-		br
+				p 
+					i LuvnPupz does not allow same-day adoptions; please understand that this is in the best interests of our pups (who have been through so much already). We're here to make sure you get the right dog for your family, and we appreciate your patience as we find the perfect match for you!
+
+				br
+				p.section-block
+					b Check out our adoptable dogs here:
+					br
+					br
+					a(target="_blank", href="http://www.adoptapet.com/shelter87233-dogs.html") 
+						img(src="/images/adopt_a_pet.gif")
+						br
+						br
+						span http://www.adoptapet.com/shelter87233-dogs.html 
+						
+				br
+			.col-lg-4.visible-lg
+				img(src="/images/puppy1.png", style="width: 100%;")
 			
 		h2 Online Forms
 		.pup-forms
