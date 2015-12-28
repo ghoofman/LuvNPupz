@@ -45,6 +45,7 @@ exports = module.exports = function(app) {
 	app.all('/events', routes.views.events);
 	app.all('/support', routes.views.support);
 	app.all('/adopt', routes.views.adopt);
+	app.all('/preadoption', routes.views.preadoption);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

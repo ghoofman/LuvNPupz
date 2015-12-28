@@ -1,0 +1,499 @@
+extends ../layouts/default
+
+block intro
+	.container
+		h1 Pre Adoption Application
+		
+block content
+	.container
+		if enquirySubmitted
+			h3 Thanks for sending us your pre adoption application, we'll be in touch soon.
+		else		
+			i All fields are required unless otherwise specified
+
+			form(method='post')
+				.row: .col-sm-8.col-md-6
+					input(type='hidden', name='action', value='preadoption')
+						
+					h3 Contact information
+					
+					.form-group(class=validationErrors.names ? 'has-error' : null)
+						label Name(s)
+						input(type='text', name='names', value=formData['names']).form-control
+							
+					.form-group(class=validationErrors.address ? 'has-error' : null)
+						label Address
+						input(type='text', name='address', value=formData['address']).form-control
+						
+					.form-group(class=validationErrors.phone ? 'has-error' : null)
+						label Phone
+						input(type='text', name='phone', value=formData.phone).form-control
+					
+					.form-group
+						label Alternate Number
+						input(type='text', name='alternateNumber', value=formData.alternateNumber, placeholder='(optional)').form-control
+					
+					.form-group(class=validationErrors.email ? 'has-error' : null)
+						label Email
+						input(type='email', name='email', value=formData.email).form-control
+						
+					h3 Work Life
+						
+					.form-group(class=validationErrors.employment ? 'has-error' : null)
+						label Employment
+						input(type='text', name='employment', value=formData.employment).form-control
+					
+					.form-group(class=validationErrors.partnerEmployment ? 'has-error' : null)
+						label Spouse/Partner Employment
+						input(type='text', name='partnerEmployment', value=formData.partnerEmployment).form-control
+					
+					.form-group(class=validationErrors.schedule ? 'has-error' : null)
+						label Please tell us about your work schedule(s)
+						textarea(name='schedule', placeholder='' rows=4).form-control= formData.schedule
+					
+					.form-group(class=validationErrors.leftAlone ? 'has-error' : null)
+						label How long will the dog be left alone most days?
+						textarea(name='leftAlone', placeholder='' rows=4).form-control= formData.leftAlone
+						
+					h3 Home Life
+					
+					.form-group(class=validationErrors.agreeable ? 'has-error' : null)
+						label Are all of the people living in the home agreeable to owning a pet dog?
+						.radio
+							label
+								input(type='radio', name='agreeable', value="Yes", aria-label="Yes", checked=formData.agreeable=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='agreeable', value="No", aria-label="No", checked=formData.agreeable=='No')
+								span No
+
+					.form-group(class=validationErrors.responsibility ? 'has-error' : null)
+						label Will everyone help to take care of the dog or will this become the responsibility of one person?
+						input(type='text', name='responsibility', value=formData.responsibility).form-control
+					
+					.form-group(class=validationErrors.dander ? 'has-error' : null)
+						label Does anyone in your household have a known allergy to dog dander?
+						.radio
+							label
+								input(type='radio', name='dander', value="Yes", aria-label="Yes", checked=formData.dander=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='dander', value="No", aria-label="No", checked=formData.dander=='No')
+								span No	
+								
+					.form-group
+						label If so, how will you deal with this?
+						input(type='text', name='danderCare', value=formData.danderCare, placeholder='(optional)').form-control
+					
+					.form-group(class=validationErrors.crated ? 'has-error' : null)
+						label Will the dog be crated, loose in the house, kenneled or tied in the yard?
+						input(type='text', name='crated', value=formData.crated, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.travel ? 'has-error' : null)
+						label Do you travel often?
+						input(type='text', name='travel', value=formData.travel, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.travelArrangements ? 'has-error' : null)
+						label Would you take the dog with you, board it or make other arrangements?
+						input(type='text', name='travelArrangements', value=formData.travelArrangements, placeholder="(optional)").form-control
+							
+					h3 Veterinary Care
+					
+					.form-group(class=validationErrors.vetinary ? 'has-error' : null)
+						label Veterinary reference (name, city, phone)
+						input(type='text', name='vetinary', value=formData.vetinary).form-control
+						
+					.form-group(class=validationErrors.vetinaryContact ? 'has-error' : null)
+						label May we contact your veterinarian's office for a reference?
+						.radio
+							label
+								input(type='radio', name='vetinaryContact', value="Yes", aria-label="Yes", checked=formData.vetinaryContact=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='vetinaryContact', value="No", aria-label="No", checked=formData.vetinaryContact=='No')
+								span No	
+								
+					.form-group(class=validationErrors.vetinaryPastPets ? 'has-error' : null)
+						label May we obtain information about past pets you've owned?
+						.radio
+							label
+								input(type='radio', name='vetinaryPastPets', value="Yes", aria-label="Yes", checked=formData.vetinaryPastPets=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='vetinaryPastPets', value="No", aria-label="No", checked=formData.vetinaryPastPets=='No')
+								span No	
+								
+					h3 References
+					
+					.form-group(class=validationErrors.references ? 'has-error' : null)
+						label Please provide at least one other reference (name and phone)
+						input(type='text', name='references', value=formData.references).form-control
+					
+					h3 Home and Yard
+					
+					.form-group(class=validationErrors.homeType ? 'has-error' : null)
+						label Home Type
+						select(name='homeType').form-control
+							option(value='') (select one)
+							each type in homeTypes
+								option(value=type.value, selected=formData.homeType == type.value)= type.label
+					
+					.form-group(class=validationErrors.rentOwn ? 'has-error' : null)
+						label Do you rent or own?
+						.radio
+							label
+								input(type='radio', name='rentOwn', value="Rent", aria-label="Rent", checked=formData.rentOwn=='Rent')
+								span Rent	
+						.radio
+							label
+								input(type='radio', name='rentOwn', value="Own", aria-label="Own", checked=formData.rentOwn=='Own')
+								span Own		
+								
+					.form-group(class=validationErrors.pool ? 'has-error' : null)
+						label Is there a pool on your property?
+						.radio
+							label
+								input(type='radio', name='pool', value="Yes", aria-label="Yes", checked=formData.pool=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='pool', value="No", aria-label="No", checked=formData.pool=='No')
+								span No	
+					
+					.form-group(class=validationErrors.poolFencing ? 'has-error' : null)
+						label If yes, is the pool enclosed by fencing?
+						.radio
+							label
+								input(type='radio', name='poolFencing', value="Yes", aria-label="Yes", checked=formData.poolFencing=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='poolFencing', value="No", aria-label="No", checked=formData.poolFencing=='No')
+								span No		
+									
+					.form-group(class=validationErrors.mainroad ? 'has-error' : null)
+						label Is your house close to a main road?
+						.radio
+							label
+								input(type='radio', name='mainroad', value="Yes", aria-label="Yes", checked=formData.mainroad=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='mainroad', value="No", aria-label="No", checked=formData.mainroad=='No')
+								span No			
+					
+					.form-group(class=validationErrors.neighbors ? 'has-error' : null)
+						label Close to neighbors? 
+						.radio
+							label
+								input(type='radio', name='neighbors', value="Yes", aria-label="Yes", checked=formData.neighbors=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='neighbors', value="No", aria-label="No", checked=formData.neighbors=='No')
+								span No		
+								
+					
+					.form-group(class=validationErrors.landlordAllow ? 'has-error' : null)
+						label If you rent, does your landlord allow pets and know that you are adopting?
+						.radio
+							label
+								input(type='radio', name='landlordAllow', value="Yes", aria-label="Yes", checked=formData.landlordAllow=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='landlordAllow', value="No", aria-label="No", checked=formData.landlordAllow=='No')
+								span No		
+								
+					.form-group(class=validationErrors.landlord ? 'has-error' : null)
+						label Name and phone number of landlord:
+						input(type='text', name='landlord', value=formData.landlord, placeholder="(optional)").form-control
+					
+								
+					h3 Fencing		
+							
+					.form-group(class=validationErrors.fencing ? 'has-error' : null)
+						label Do you have fencing? 
+						.radio
+							label
+								input(type='radio', name='fencing', value="Yes", aria-label="Yes", checked=formData.fencing=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fencing', value="No", aria-label="No", checked=formData.fencing=='No')
+								span No		
+								
+					.form-group(class=validationErrors.fenceType ? 'has-error' : null)
+						label If yes, please describe (as metal, wood or other?)
+						input(type='text', name='fenceType', value=formData.fenceType, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.fenceAttached ? 'has-error' : null)
+						label If yes, is your fence attached to the house?
+						.radio
+							label
+								input(type='radio', name='fenceAttached', value="Yes", aria-label="Yes", checked=formData.fenceAttached=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceAttached', value="No", aria-label="No", checked=formData.fenceAttached=='No')
+								span No		
+								
+					.form-group
+						label Height of the fence?
+						input(type='text', name='fenceHeight', value=formData.fenceType, placeholder="(optional)").form-control
+					
+					.form-group
+						label Surrounding front yard, back yard, or both?
+						input(type='text', name='fenceSurround', value=formData.fenceSurround, placeholder="(optional)").form-control
+					
+					.form-group
+						label Number of gates?
+						input(type='text', name='gates', value=formData.gates, placeholder="(optional)").form-control
+					
+					.form-group
+						label Approximately how much yard area does it enclose?
+						input(type='text', name='yardArea', value=formData.yardArea, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.fenceGoodRepair ? 'has-error' : null)
+						label Is it in good repair?
+						.radio
+							label
+								input(type='radio', name='fenceGoodRepair', value="Yes", aria-label="Yes", checked=formData.fenceGoodRepair=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceGoodRepair', value="No", aria-label="No", checked=formData.fenceGoodRepair=='No')
+								span No		
+					
+					.form-group(class=validationErrors.fenceUnder ? 'has-error' : null)
+						label Could a dog go under or over it easily?
+						.radio
+							label
+								input(type='radio', name='fenceUnder', value="Yes", aria-label="Yes", checked=formData.fenceUnder=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceUnder', value="No", aria-label="No", checked=formData.fenceUnder=='No')
+								span No		
+								
+					.form-group
+						label If you don't have a fenced yard, how will the dog exercise and relieve itself?
+						input(type='text', name='exercise', value=formData.exercise, placeholder="(optional)").form-control
+
+
+					h3 Pet Ownership
+					
+					.form-group(class=validationErrors.ownershipCosts ? 'has-error' : null)
+						label Are you aware of the costs of pet ownership (including but not limited to food, veterinary expenses, dental care, and grooming needs – which could cost about $1000/year for the first dog, according to the Humane Society of the U.S.)? 
+						.radio
+							label
+								input(type='radio', name='ownershipCosts', value="Yes", aria-label="Yes", checked=formData.ownershipCosts=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='ownershipCosts', value="No", aria-label="No", checked=formData.ownershipCosts=='No')
+								span No		
+					
+					.form-group(class=validationErrors.afford ? 'has-error' : null)
+						label Are you financially able to afford ongoing care for this dog? 
+						.radio
+							label
+								input(type='radio', name='afford', value="Yes", aria-label="Yes", checked=formData.afford=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='afford', value="No", aria-label="No", checked=formData.afford=='No')
+								span No		
+								
+				.row: .col-xs-12
+					label If you presently own other pets, please list and describe them here.
+					.table-responsive
+						table.table
+							tr
+								td Breed/type of animal
+								td Age
+								td Sex
+								td Spayed/neutered?
+								td How long have you had this pet?
+							tr
+								td
+									input(type='text', name='breed1', value=formData.breed1, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age1', value=formData.age1, placeholder="(optional)").form-control
+								td
+									select(name='sex1').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed1').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had1', value=formData.had1, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed2', value=formData.breed2, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age2', value=formData.age2, placeholder="(optional)").form-control
+								td
+									select(name='sex2').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed2').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had2', value=formData.had2, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed3', value=formData.breed3, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age3', value=formData.age3, placeholder="(optional)").form-control
+								td
+									select(name='sex3').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed3').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had3', value=formData.had3, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed4', value=formData.breed4, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age4', value=formData.age4, placeholder="(optional)").form-control
+								td
+									select(name='sex4').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed4').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had4', value=formData.had4, placeholder="(optional)").form-control
+					
+								
+				.row: .col-sm-8.col-md-6							
+					.form-group(class=validationErrors.additionalPets ? 'has-error' : null)
+						label Additional Pets?
+						textarea(name='additionalPets', placeholder='(optional)' rows=4).form-control= formData.additionalPets
+					
+					.form-group(class=validationErrors.dogBreedHandling ? 'has-error' : null)
+						label What kind of dog would you like? List two or three breeds, sex, age range, and whether or not you could handle a dog with special needs (like blindness, deafness, epilepsy)?
+						textarea(name='dogBreedHandling' rows=4).form-control= formData.dogBreedHandling
+					
+					.form-group
+						label Are you an experienced dog owner?
+						input(type='text', name='experienced', value=formData.experienced).form-control
+					
+					.form-group(class=validationErrors.familiar ? 'has-error' : null)
+						label Are you familiar with the breed of dog you are requesting to adopt? (Have you owned one before or do you own one now or know one well from within the family?) 
+						.radio
+							label
+								input(type='radio', name='familiar', value="Yes", aria-label="Yes", checked=formData.familiar=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='familiar', value="No", aria-label="No", checked=formData.familiar=='No')
+								span No		
+					
+					.form-group
+						label What are you looking for in this dog? (Companionship, a warning barker, a guard dog, a hunting dog, a hiking companion, a dog for agility training?)
+						input(type='text', name='lookingFor', value=formData.lookingFor).form-control
+					
+					.form-group
+						label Any other qualities you are looking for?
+						input(type='text', name='qualities', value=formData.qualities).form-control
+				
+					.form-group(class=validationErrors.crating ? 'has-error' : null)
+						label Are you aware of the value of crating a dog to give it a quiet, safe space of its own, but never using it too long or as punishment?
+						.radio
+							label
+								input(type='radio', name='crating', value="Yes", aria-label="Yes", checked=formData.crating=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='crating', value="No", aria-label="No", checked=formData.crating=='No')
+								span No		
+								
+					.form-group(class=validationErrors.crate ? 'has-error' : null)
+						label Do you plan to use a crate with this dog?
+						.radio
+							label
+								input(type='radio', name='crate', value="Yes", aria-label="Yes", checked=formData.crate=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='crate', value="No", aria-label="No", checked=formData.crate=='No')
+								span No		
+					label 
+						i If you must crate a full-grown dog for more than 9 hours per day without a bathroom break, please consider getting a pet cat instead. Dogs are social animals and many cannot maintain bowel and bladder control for longer than that.
+					
+					br 
+					br
+					
+					label Ideally, we (or a cooperating rescue group/representative) will visit your home before you adopt an animal from us. This gives us an overall picture of the dog's new environment, and we may be able to make suggestions to help you get ready for your new family member. 
+					.form-group(class=validationErrors.objections ? 'has-error' : null)
+						label Do you have any objections to this? 
+						.radio
+							label
+								input(type='radio', name='objections', value="Yes", aria-label="Yes", checked=formData.objections=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='objections', value="No", aria-label="No", checked=formData.objections=='No')
+								span No		
+					.form-group(class=validationErrors.beforeAfterPlacement ? 'has-error' : null)
+						label May we have a visit before and after placement?
+						.radio
+							label
+								input(type='radio', name='beforeAfterPlacement', value="Yes", aria-label="Yes", checked=formData.beforeAfterPlacement=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='beforeAfterPlacement', value="No", aria-label="No", checked=formData.beforeAfterPlacement=='No')
+								span No		
+					
+											
+										
+					h3 Agreement
+					
+					p Thank you for taking the time to complete this application. We look forward to helping you find the perfect dog for your family! Stay up-to-date on our adoptable dogs by visiting our website at www.luvnpupz.org or our Facebook page at www.facebook.com/luvnpupz.
+					
+					.form-group(class=validationErrors.mainAdopter ? 'has-error' : null)
+						label Please initial to verify that the 'main adopter' is over 21
+						input(type='text', name='mainAdopter', value=formData.mainAdopter).form-control
+						
+						
+					//- .form-group(class=validationErrors.enquiryType ? 'has-error' : null)
+					//- 	label What are you contacting us about?
+					//- 	select(name='enquiryType').form-control
+					//- 		option(value='') (select one)
+					//- 		each type in enquiryTypes
+					//- 			option(value=type.value, selected=formData.enquiryType == type.value)= type.label
+					//- 			
+					//- .form-group(class=validationErrors.message ? 'has-error' : null)
+					//- 	label Message
+					//- 	textarea(name='message', placeholder='Leave us a message...' rows=4).form-control= formData.message
+					//- 
+					.form-actions
+						button(type='submit').btn.btn-primary.form-control Send Application
+
+					h3 Additional Information
+					p The information you give in this form will become part of your adoption agreement if you adopt a dog from us. Our group may reclaim custody of a dog if responsible care is not provided. As part of this agreement, any dog you adopt from us must live indoors and be vetted annually or as needed.
+					p Please remember that all of us are working together on behalf of this dog's lifetime of care, and this contract is to enforce the spirit of this agreement.
+					p Although we will try to be very honest about a dog's known background, breed, habits, and personality, you can expect a 'get-acquainted' time together.
+					p Our adoption fee is minimal for services provided, more for dogs that require full vetting or sterilization before adoption. Our adoption agreement requires that you return the dog to us if you are unable to keep it. If a dog has an appointment to be spayed or neutered, we expect you to agree to bring the animal to the appointment.
+					p We can accommodate dates, but you MUST be there or the dog MUST be returned. Over six million unwanted pets are euthanized each year, and we ask that you share in the responsibility of not adding to that problem. We will try our best to match you up with a family pet that will offer you its lifetime in companionship.
+					p All dog owners should have knowledge of their breed before acquiring one. Suggested reading: Mutts: America's Dogs by Brain Kilcommons and Michael Capuuzzo (1996) and The Right Dog for You by Daniel Tortora (1980). A wonderful book on problem dog behaviors is The Dog Who Loved Too Much by Dr. Nicholas Dodman (1996). Also good is The Culture Clash by Jean Donaldson.
+					p Please dog-proof your house! Prepare ahead by removing poisonous plants, household chemicals, garbage (like chicken bones!), and easy access to chocolate (that can cause death to a dog). Use baby gates and close off pets from dangerous areas; check outside fencing and gates for weakness or escape routes.
+					p Be aware that the dog may be anxious and frightened on its first day in your home. Anticipate a reasonable adjustment period. At first, it may appear nervous, have loose stools, vomit, or forget its housetraining manners. Being forewarned is a major step in the adjustment phase.
+					
