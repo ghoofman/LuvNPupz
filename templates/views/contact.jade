@@ -2,7 +2,7 @@ extends ../layouts/default
 
 block intro
 	.container
-		h1 Contact Us
+		h2 Contact Us
 		p 
 			span Phone: 616-293-4528 (Carri Shipaila, founder and president)
 		p 
@@ -15,12 +15,12 @@ block intro
 			span Twitter: 
 			a(href="https://twitter.com/LuvnPupz") https://twitter.com/LuvnPupz
 			
-		h1 Leave a message
+		h2 Leave a message
 		
 block content
 	.container
 		if enquirySubmitted
-			h3 Thanks for getting in touch.
+			h2 Thanks for getting in touch.
 		else
 			.row: .col-sm-8.col-md-6
 				form(method='post')
