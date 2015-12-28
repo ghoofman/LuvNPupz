@@ -7,7 +7,7 @@ exports = module.exports = function(req, res) {
 		locals = res.locals;
 
 	// Set locals
-	locals.section = 'preadoption';
+	locals.section = 'adopt';
 	locals.homeTypes = PreAdoption.fields.homeType.ops;
 	locals.formData = req.body || {};
 	locals.validationErrors = {};
