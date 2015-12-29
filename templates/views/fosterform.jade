@@ -1,0 +1,587 @@
+extends ../layouts/default
+
+block intro
+	.container
+		h2 Foster Application
+		
+block content
+	.container
+		if enquirySubmitted
+			h2 Thanks for sending us your foster application, we'll be in touch soon.
+		else		
+			i All fields are required unless otherwise specified
+
+			form(method='post')
+				.row: .col-sm-8.col-md-6
+					input(type='hidden', name='action', value='fosterform')
+						
+					h3 Contact information
+					
+					.form-group(class=validationErrors.name ? 'has-error' : null)
+						label Name
+						input(type='text', name='name', value=formData['name']).form-control
+					
+					.form-group
+						label Name of secondary caretaker
+						input(type='text', name='secondaryCareTakerName', value=formData['secondaryCareTakerName'], placeholder="(optional)").form-control
+							
+					.form-group(class=validationErrors.address ? 'has-error' : null)
+						label Address
+						input(type='text', name='address', value=formData['address']).form-control
+						
+					.form-group(class=validationErrors.phone ? 'has-error' : null)
+						label Phone
+						input(type='text', name='phone', value=formData.phone).form-control
+						
+					.form-group
+						label Alternate Number (cell/work)
+						input(type='text', name='alternateNumber', value=formData.alternateNumber, placeholder='(optional)').form-control
+					
+					.form-group
+						label Secondary caretaker phone
+						input(type='text', name='secondaryCaretakerNumber', value=formData.secondaryCaretakerNumber, placeholder="(optional)").form-control
+					
+					.form-group
+						label Best time to contact
+						input(type='text', name='bestTimeToContact', value=formData.bestTimeToContact, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.email ? 'has-error' : null)
+						label Email
+						input(type='email', name='email', value=formData.email).form-control
+						
+					h3 Work Life
+						
+					.form-group(class=validationErrors.employment ? 'has-error' : null)
+						label Employment
+						input(type='text', name='employment', value=formData.employment).form-control
+					
+					.form-group(class=validationErrors.partnerEmployment ? 'has-error' : null)
+						label Spouse/Partner Employment
+						input(type='text', name='partnerEmployment', value=formData.partnerEmployment).form-control
+					
+					.form-group(class=validationErrors.schedule ? 'has-error' : null)
+						label Please tell us about your work schedule(s)
+						textarea(name='schedule', placeholder='' rows=4).form-control= formData.schedule
+					
+					.form-group(class=validationErrors.leftAlone ? 'has-error' : null)
+						label How long will the dog be left alone most days?
+						textarea(name='leftAlone', placeholder='' rows=4).form-control= formData.leftAlone
+						
+					h3 Home Life
+					
+					.form-group(class=validationErrors.peopleLiving ? 'has-error' : null)
+						label Please tell us about the people living in your home (including children with ages and anyone else who lives with you):
+						textarea(name='peopleLiving', placeholder='' rows=4).form-control= formData.peopleLiving
+					
+					.form-group(class=validationErrors.agreeable ? 'has-error' : null)
+						label Are all of the people living in the home agreeable to fostering?
+						.radio
+							label
+								input(type='radio', name='agreeable', value="Yes", aria-label="Yes", checked=formData.agreeable=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='agreeable', value="No", aria-label="No", checked=formData.agreeable=='No')
+								span No
+
+
+					h3 Veterinary Care
+					
+					.form-group(class=validationErrors.vetinaryHas ? 'has-error' : null)
+						label Do you currently have a veterinarian?
+						.radio
+							label
+								input(type='radio', name='vetinaryHas', value="Yes", aria-label="Yes", checked=formData.vetinaryHas=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='vetinaryHas', value="No", aria-label="No", checked=formData.vetinaryHas=='No')
+								span No	
+					
+					.form-group
+						label If so, please provide contact information (name, city, phone)
+						input(type='text', name='vetinary', value=formData.vetinary, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.vetinaryType ? 'has-error' : null)
+						label Would you describe your vet as
+						select(name='vetinaryType').form-control
+							option(value='') (select one)
+							each type in vetinaryTypes
+								option(value=type.value, selected=formData.vetinaryType == type.value)= type.label
+						
+						
+						
+					.form-group(class=validationErrors.vetinaryEmergency ? 'has-error' : null)
+						label Do you have access to an emergency vet clinic or specialty clinics?
+						.radio
+							label
+								input(type='radio', name='vetinaryEmergency', value="Yes", aria-label="Yes", checked=formData.vetinaryEmergency=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='vetinaryEmergency', value="No", aria-label="No", checked=formData.vetinaryEmergency=='No')
+								span No	
+								
+								
+								
+								
+								
+								
+								
+					h3 References
+				.row: .col-xs-12
+						label Please provide two references (people who know you well and are willing to verify your ability to properly care for a foster animal).
+						.table-responsive
+							table.table
+								tr
+									td Full name
+									td Phone
+									td Address
+									td How long have you known them?
+								tr.form-group(class=validationErrors.fullName1 ? 'has-error' : null)
+									td
+										input(type='text', name='fullName1', value=formData.fullName1).form-control
+									td
+										input(type='text', name='phone1', value=formData.phone1).form-control
+									td
+										input(type='text', name='address1', value=formData.address1).form-control
+									td
+										input(type='text', name='known1', value=formData.known1).form-control
+								tr.form-group(class=validationErrors.fullName2 ? 'has-error' : null)
+									td
+										input(type='text', name='fullName2', value=formData.fullName2).form-control
+									td
+										input(type='text', name='phone2', value=formData.phone2).form-control
+									td
+										input(type='text', name='address2', value=formData.address2).form-control
+									td
+										input(type='text', name='known2', value=formData.known2).form-control
+									
+										
+				.row: .col-sm-8.col-md-6
+					h3 Home and Yard
+					
+					.form-group(class=validationErrors.homeType ? 'has-error' : null)
+						label Home Type
+						select(name='homeType').form-control
+							option(value='') (select one)
+							each type in homeTypes
+								option(value=type.value, selected=formData.homeType == type.value)= type.label
+					
+					.form-group(class=validationErrors.rentOwn ? 'has-error' : null)
+						label Do you rent or own?
+						.radio
+							label
+								input(type='radio', name='rentOwn', value="Rent", aria-label="Rent", checked=formData.rentOwn=='Rent')
+								span Rent	
+						.radio
+							label
+								input(type='radio', name='rentOwn', value="Own", aria-label="Own", checked=formData.rentOwn=='Own')
+								span Own		
+								
+					.form-group(class=validationErrors.pool ? 'has-error' : null)
+						label Is there a pool on your property?
+						.radio
+							label
+								input(type='radio', name='pool', value="Yes", aria-label="Yes", checked=formData.pool=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='pool', value="No", aria-label="No", checked=formData.pool=='No')
+								span No	
+					
+					.form-group(class=validationErrors.poolFencing ? 'has-error' : null)
+						label If yes, is the pool enclosed by fencing?
+						.radio
+							label
+								input(type='radio', name='poolFencing', value="Yes", aria-label="Yes", checked=formData.poolFencing=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='poolFencing', value="No", aria-label="No", checked=formData.poolFencing=='No')
+								span No		
+									
+					.form-group(class=validationErrors.mainroad ? 'has-error' : null)
+						label Is your house close to a main road?
+						.radio
+							label
+								input(type='radio', name='mainroad', value="Yes", aria-label="Yes", checked=formData.mainroad=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='mainroad', value="No", aria-label="No", checked=formData.mainroad=='No')
+								span No			
+					
+					.form-group(class=validationErrors.neighbors ? 'has-error' : null)
+						label Close to neighbors? 
+						.radio
+							label
+								input(type='radio', name='neighbors', value="Yes", aria-label="Yes", checked=formData.neighbors=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='neighbors', value="No", aria-label="No", checked=formData.neighbors=='No')
+								span No		
+								
+					
+					.form-group(class=validationErrors.landlordAllow ? 'has-error' : null)
+						label If you rent, does your landlord allow pets and know that you are adopting?
+						.radio
+							label
+								input(type='radio', name='landlordAllow', value="Yes", aria-label="Yes", checked=formData.landlordAllow=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='landlordAllow', value="No", aria-label="No", checked=formData.landlordAllow=='No')
+								span No		
+								
+					.form-group(class=validationErrors.landlord ? 'has-error' : null)
+						label Name and phone number of landlord:
+						input(type='text', name='landlord', value=formData.landlord, placeholder="(optional)").form-control
+					
+								
+					h3 Fencing		
+							
+					.form-group(class=validationErrors.fencing ? 'has-error' : null)
+						label Do you have fencing? 
+						.radio
+							label
+								input(type='radio', name='fencing', value="Yes", aria-label="Yes", checked=formData.fencing=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fencing', value="No", aria-label="No", checked=formData.fencing=='No')
+								span No		
+								
+					.form-group(class=validationErrors.fenceType ? 'has-error' : null)
+						label If yes, please describe (as metal, wood or other?)
+						input(type='text', name='fenceType', value=formData.fenceType, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.fenceAttached ? 'has-error' : null)
+						label If yes, is your fence attached to the house?
+						.radio
+							label
+								input(type='radio', name='fenceAttached', value="Yes", aria-label="Yes", checked=formData.fenceAttached=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceAttached', value="No", aria-label="No", checked=formData.fenceAttached=='No')
+								span No		
+								
+					.form-group
+						label Height of the fence?
+						input(type='text', name='fenceHeight', value=formData.fenceType, placeholder="(optional)").form-control
+					
+					.form-group
+						label Surrounding front yard, back yard, or both?
+						input(type='text', name='fenceSurround', value=formData.fenceSurround, placeholder="(optional)").form-control
+					
+					.form-group
+						label Number of gates?
+						input(type='text', name='gates', value=formData.gates, placeholder="(optional)").form-control
+					
+					.form-group
+						label Approximately how much yard area does it enclose?
+						input(type='text', name='yardArea', value=formData.yardArea, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.fenceGoodRepair ? 'has-error' : null)
+						label Is it in good repair?
+						.radio
+							label
+								input(type='radio', name='fenceGoodRepair', value="Yes", aria-label="Yes", checked=formData.fenceGoodRepair=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceGoodRepair', value="No", aria-label="No", checked=formData.fenceGoodRepair=='No')
+								span No		
+					
+					.form-group(class=validationErrors.fenceUnder ? 'has-error' : null)
+						label Could a dog go under or over it easily?
+						.radio
+							label
+								input(type='radio', name='fenceUnder', value="Yes", aria-label="Yes", checked=formData.fenceUnder=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='fenceUnder', value="No", aria-label="No", checked=formData.fenceUnder=='No')
+								span No		
+								
+					.form-group
+						label If you don't have a fenced yard, how will the dog exercise and relieve itself?
+						input(type='text', name='exercise', value=formData.exercise, placeholder="(optional)").form-control
+
+
+					h3 Pet Ownership
+						
+				.row: .col-xs-12
+					label If you presently own other pets, please list and describe them here.
+					.table-responsive
+						table.table
+							tr
+								td Breed/type of animal
+								td Age
+								td Sex
+								td Spayed/neutered?
+								td How long have you had this pet?
+							tr
+								td
+									input(type='text', name='breed1', value=formData.breed1, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age1', value=formData.age1, placeholder="(optional)").form-control
+								td
+									select(name='sex1').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed1').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had1', value=formData.had1, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed2', value=formData.breed2, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age2', value=formData.age2, placeholder="(optional)").form-control
+								td
+									select(name='sex2').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed2').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had2', value=formData.had2, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed3', value=formData.breed3, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age3', value=formData.age3, placeholder="(optional)").form-control
+								td
+									select(name='sex3').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed3').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had3', value=formData.had3, placeholder="(optional)").form-control
+							tr
+								td
+									input(type='text', name='breed4', value=formData.breed4, placeholder="(optional)").form-control
+								td
+									input(type='text', name='age4', value=formData.age4, placeholder="(optional)").form-control
+								td
+									select(name='sex4').form-control
+										option(value='Male') Male
+										option(value='Female') Female
+								td
+									select(name='spayed4').form-control
+										option(value='Yes') Yes
+										option(value='No') No
+								td
+									input(type='text', name='had4', value=formData.had4, placeholder="(optional)").form-control
+					
+								
+				.row: .col-sm-8.col-md-6							
+					.form-group(class=validationErrors.additionalPets ? 'has-error' : null)
+						label Additional Pets?
+						textarea(name='additionalPets', placeholder='(optional)' rows=4).form-control= formData.additionalPets
+					
+					.form-group(class=validationErrors.vaccinations ? 'has-error' : null)
+						label Are all dogs in your household current on all recommended and/or required vaccinations?
+						label 
+							i We will need proof of this before placing a dog with you.
+						.radio
+							label
+								input(type='radio', name='vaccinations', value="Yes", aria-label="Yes", checked=formData.vaccinations=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='vaccinations', value="No", aria-label="No", checked=formData.vaccinations=='No')
+								span No		
+					
+					.form-group(class=validationErrors.react ? 'has-error' : null)
+						label How do your current pets react to other dogs?
+						input(type='text', name='react', value=formData.react).form-control
+					
+					.form-group(class=validationErrors.obedience ? 'has-error' : null)
+						label Are your dogs obedience trained?
+						.radio
+							label
+								input(type='radio', name='obedience', value="Yes", aria-label="Yes", checked=formData.vaccinations=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='obedience', value="No", aria-label="No", checked=formData.vaccinations=='No')
+								span No		
+								
+					.form-group(class=validationErrors.medicalExperience ? 'has-error' : null)
+						label What kinds of medical conditions have you had experience handling (seizures, diabetes, heartworm, deafness, blindness, ear infections, etc.)?
+						input(type='text', name='medicalExperience', value=formData.medicalExperience, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.travel ? 'has-error' : null)
+						label Do you travel often?
+						input(type='text', name='travel', value=formData.travel).form-control
+					
+					.form-group(class=validationErrors.notAvailable ? 'has-error' : null)
+						label Are there any dates in the near future when you will not be available?
+						input(type='text', name='notAvailable', value=formData.notAvailable).form-control
+					
+					.form-group(class=validationErrors.notHome ? 'has-error' : null)
+						label Who cares for your pets when you are not home?
+						input(type='text', name='notHome', value=formData.notHome).form-control
+					
+					.form-group(class=validationErrors.whyFoster ? 'has-error' : null)
+						label Why do you want to foster?
+						textarea(name='whyFoster' rows=4).form-control= formData.whyFoster
+					
+					
+					.form-group(class=validationErrors.commitToFostering ? 'has-error' : null)
+						label How long can you generally commit to fostering a dog?
+						select(name='commitToFostering').form-control
+							option(value='') (select one)
+							each type in commitToFosteringTypes
+								option(value=type.value, selected=formData.commitToFostering == type.value)= type.label
+					
+					.form-group(class=validationErrors.spendTime ? 'has-error' : null)
+						label Where will the foster spend most of its time?
+						select(name='spendTime').form-control
+							option(value='') (select one)
+							each type in spendTimeTypes
+								option(value=type.value, selected=formData.spendTime == type.value)= type.label
+					
+		
+					.form-group(class=validationErrors.crateTraining ? 'has-error' : null)
+						label Are you familiar with crate training?
+						.radio
+							label
+								input(type='radio', name='crateTraining', value="Yes", aria-label="Yes", checked=formData.crateTraining=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='crateTraining', value="No", aria-label="No", checked=formData.crateTraining=='No')
+								span No	
+									
+					.form-group(class=validationErrors.haveCrate ? 'has-error' : null)
+						label Do you have a crate available for use with your foster dog?
+						.radio
+							label
+								input(type='radio', name='haveCrate', value="Yes", aria-label="Yes", checked=formData.haveCrate=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='haveCrate', value="No", aria-label="No", checked=formData.haveCrate=='No')
+								span No		
+		
+					.form-group(class=validationErrors.fosterSleep ? 'has-error' : null)
+						label Where will the foster sleep at night?
+						select(name='fosterSleep').form-control
+							option(value='') (select one)
+							each type in fosterSleepTypes
+								option(value=type.value, selected=formData.fosterSleep == type.value)= type.label
+					
+					.form-group(class=validationErrors.fosterKeep ? 'has-error' : null)
+						label Where will you keep your foster when no one is home?
+						select(name='fosterKeep').form-control
+							option(value='') (select one)
+							each type in fosterKeepTypes
+								option(value=type.value, selected=formData.fosterKeep == type.value)= type.label
+					
+		
+					
+					
+					
+					.form-group(class=validationErrors.awareAdultUnknown ? 'has-error' : null)
+						label Are you aware that your foster may be an adult with an unknown history and no prior training?
+						input(type='text', name='awareAdultUnknown', value=formData.awareAdultUnknown).form-control
+					
+					
+					.form-group(class=validationErrors.experienced ? 'has-error' : null)
+						label Have you had any experience introducing new adult dogs into your household?
+						input(type='text', name='experienced', value=formData.experienced).form-control
+					.form-group(class=validationErrors.experiencedAccomplished ? 'has-error' : null)
+						label If yes, please describe how this was accomplished
+						input(type='text', name='experiencedAccomplished', value=formData.experiencedAccomplished, placeholder="(optional)").form-control
+					
+					
+					
+					.form-group(class=validationErrors.mayChewDigBarkJump ? 'has-error' : null)
+						label Are you aware that your foster may chew, dig, bark, jump, or display other undesirable behaviors while in your care? 
+						.radio
+							label
+								input(type='radio', name='mayChewDigBarkJump', value="Yes", aria-label="Yes", checked=formData.mayChewDigBarkJump=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='mayChewDigBarkJump', value="No", aria-label="No", checked=formData.mayChewDigBarkJump=='No')
+								span No		
+			
+					.form-group(class=validationErrors.workWithObedience ? 'has-error' : null)
+						label Are you willing (and able) to work with your foster dog in areas such as basic obedience and house training?
+						.radio
+							label
+								input(type='radio', name='workWithObedience', value="Yes", aria-label="Yes", checked=formData.workWithObedience=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='workWithObedience', value="No", aria-label="No", checked=formData.workWithObedience=='No')
+								span No		
+					
+					
+					.form-group(class=validationErrors.acceptRisk ? 'has-error' : null)
+						label Although we always disclose any known behavior and/or aggression issues about a dog – are you willing to accept the risk of a dog bite to yourself, another person or another animal while a foster dog is in your care?
+						.radio
+							label
+								input(type='radio', name='acceptRisk', value="Yes", aria-label="Yes", checked=formData.acceptRisk=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='acceptRisk', value="No", aria-label="No", checked=formData.acceptRisk=='No')
+								span No		
+					
+					.form-group(class=validationErrors.supervise ? 'has-error' : null)
+						label Are you willing to supervise any children under 10 around your foster dog at all times? 
+						.radio
+							label
+								input(type='radio', name='supervise', value="Yes", aria-label="Yes", checked=formData.supervise=='Yes')
+								span Yes	
+						.radio
+							label
+								input(type='radio', name='supervise', value="No", aria-label="No", checked=formData.supervise=='No')
+								span No		
+					
+					.form-group(class=validationErrors.typesOfFoster ? 'has-error' : null)
+						label Please describe the type(s) of foster dog(s) you are willing to have in your home, e.g. seniors, puppies, pregnant, intact (until neutered) males or females, special needs dogs – and describe what types you would definitely not want.
+						input(type='text', name='typesOfFoster', value=formData.typesOfFoster).form-control
+					
+					.form-group(class=validationErrors.countOfFoster ? 'has-error' : null)
+						label How many dogs are you willing to foster at one time? (On occasion, there may be a pair who need to remain together if possible.)
+						input(type='text', name='countOfFoster', value=formData.countOfFoster).form-control
+					
+					.form-group
+						label Is there a preferred activity level for a dog you would want to foster?
+						input(type='text', name='preferredActivityLevel', value=formData.preferredActivityLevel, placeholder="(optional)").form-control
+					
+					.form-group(class=validationErrors.levelOfExperience ? 'has-error' : null)
+						label Please describe your level of experience as a dog owner. Provide an honest assessment of your abilities to recognize and deal with any problem behaviors a foster dog might exhibit. Mention any experiences you may have had (e.g. barking, growling, possessiveness of food/toys, chewing, digging, jumping, etc.)
+						textarea(name='levelOfExperience' rows=4).form-control= formData.levelOfExperience
+						
+					
+								
+					h3 Agreement
+					
+					p Thank you for taking the time to complete this application. 
+					
+					.form-group(class=validationErrors.mainAdopter ? 'has-error' : null)
+						label Foster/Volunteer initials, (your initials here will be considered as your electronic singature) 
+						input(type='text', name='mainAdopter', value=formData.mainAdopter).form-control
+						
+					i Submission of form does NOT guarantee placement of a foster dog
+						
+					.form-actions
+						button(type='submit').btn.btn-primary.form-control Send Application
+
+	

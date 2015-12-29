@@ -36,25 +36,25 @@ Enquiry.schema.post('save', function() {
 });
 
 Enquiry.schema.methods.sendNotificationEmail = function(callback) {
-	
+
 	var enqiury = this;
-	
+
 	keystone.list('User').model.find().where('isAdmin', true).exec(function(err, admins) {
-		
+
 		if (err) return callback(err);
-		
+
 		new keystone.Email('enquiry-notification').send({
 			to: admins,
 			from: {
-				name: 'LuvNPupz',
+				name: 'LuvnPupz',
 				email: 'contact@luvnpupz.com'
 			},
-			subject: 'New Enquiry for LuvNPupz',
+			subject: 'New Enquiry for LuvnPupz',
 			enquiry: enqiury
 		}, callback);
-		
+
 	});
-	
+
 }
 
 Enquiry.defaultSort = '-createdAt';

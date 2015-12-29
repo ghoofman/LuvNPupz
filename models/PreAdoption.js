@@ -115,7 +115,7 @@ PreAdoption.schema.methods.sendNotificationEmail = function(callback) {
 		new keystone.Email('pre-adoption-notification').send({
 			to: admins,
 			from: {
-				name: 'LuvNPupz',
+				name: 'LuvnPupz',
 				email: 'contact@luvnpupz.org'
 			},
 			subject: 'New Pre Adoption Application for LuvnPupz',
