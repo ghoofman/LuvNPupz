@@ -11,7 +11,7 @@ block content
 		else		
 			i All fields are required unless otherwise specified
 
-			form(method='post')
+			form(method='post', data-toggle="formcache")
 				.row: .col-sm-8.col-md-6
 					input(type='hidden', name='action', value='preadoption')
 						
@@ -497,3 +497,5 @@ block content
 					p Please dog-proof your house! Prepare ahead by removing poisonous plants, household chemicals, garbage (like chicken bones!), and easy access to chocolate (that can cause death to a dog). Use baby gates and close off pets from dangerous areas; check outside fencing and gates for weakness or escape routes.
 					p Be aware that the dog may be anxious and frightened on its first day in your home. Anticipate a reasonable adjustment period. At first, it may appear nervous, have loose stools, vomit, or forget its housetraining manners. Being forewarned is a major step in the adjustment phase.
 					
+block js
+	script(src='/js/formcache.min.js')

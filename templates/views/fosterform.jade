@@ -11,7 +11,7 @@ block content
 		else		
 			i All fields are required unless otherwise specified
 
-			form(method='post')
+			form(method='post', data-toggle="formcache")
 				.row: .col-sm-8.col-md-6
 					input(type='hidden', name='action', value='fosterform')
 						
@@ -585,3 +585,5 @@ block content
 						button(type='submit').btn.btn-primary.form-control Send Application
 
 	
+block js
+	script(src='/js/formcache.min.js')
