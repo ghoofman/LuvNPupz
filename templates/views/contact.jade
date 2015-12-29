@@ -3,25 +3,27 @@ extends ../layouts/default
 block intro
 	.container
 		h2 Contact Us
-		p 
-			span Phone: 616-293-4528 (Carri Shipaila, founder and president)
-		p 
-			span Email: 
-			a(href="mailto:luvnpupz@luvnpupz.org") luvnpupz@luvnpupz.org
-		p 
-			span Facebook: 
-			a(href="https://www.facebook.com/luvnpupz") https://www.facebook.com/luvnpupz
-		p 
-			span Twitter: 
-			a(href="https://twitter.com/LuvnPupz") https://twitter.com/LuvnPupz
-			
-		h2 Leave a message
 		
 block content
 	.container
 		if enquirySubmitted
-			h2 Thanks for getting in touch.
-		else
+			h2 Thanks for getting in touch, we'll contact you soon.
+		else			
+			
+			p 
+				span Phone: 616-293-4528 (Carri Shipaila, founder and president)
+			p 
+				span Email: 
+				a(href="mailto:luvnpupz@luvnpupz.org") luvnpupz@luvnpupz.org
+			p 
+				span Facebook: 
+				a(href="https://www.facebook.com/luvnpupz") https://www.facebook.com/luvnpupz
+			p 
+				span Twitter: 
+				a(href="https://twitter.com/LuvnPupz") https://twitter.com/LuvnPupz
+
+		
+			h2 Leave a message
 			.row: .col-sm-8.col-md-6
 				form(method='post')
 					input(type='hidden', name='action', value='contact')
